@@ -14,8 +14,13 @@ require('./config/passport')(passport);
 
 conncectDB();
 
+const options = {
+    key: fs.readFileSync('./certs/server-key.pem'),
+    cert: fs.readFileSync('./certs/server-cert.pem'),
+};
+
 const app = express();
-const http = require('http').createServer(app);
+const http = require('https').createServer(options, app);
 
 //Logging 
 if (process.env.NODE_ENV === 'development') {
